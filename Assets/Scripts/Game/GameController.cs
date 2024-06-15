@@ -4,7 +4,6 @@ using Game.Component;
 using Game.Enemy;
 using GameUtils;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -19,6 +18,7 @@ namespace Game
         [SerializeField] private Transform player;
         [SerializeField] private Transform mapLimitA;
         [SerializeField] private Transform mapLimitB;
+        [SerializeField] private EndZoneTrigger endZoneTrigger;
 
         private readonly Dictionary<GameObject, ChasingEnemy> _trackingEnemyList = new();
         private readonly HashSet<GameObject> _scoreItem = new();
@@ -41,6 +41,7 @@ namespace Game
             var lastScore = UserScoreService.GetRecentScore();
             gameView.SetCurrentScore(0);
             gameView.SetLastScore(lastScore);
+            endZoneTrigger.OnHitPlayer = EndGameHandler;
         }
 
         private void Update()
@@ -59,10 +60,6 @@ namespace Game
             StopAllCoroutines();
             UserScoreService.AddNewScore(_currentScore);
             PopupHelpers.Show(GameConstants.EndScene);
-        }
-
-        private void ResetGame()
-        {
         }
 
         #region ENEMY SPAWN
