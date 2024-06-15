@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using Game.Component;
 using Game.Enemy;
+using GameUtils;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -24,6 +26,7 @@ namespace Game
         private int _playerHealth;
         private int _currentScore;
         private int _lastScore;
+        private bool _isDead = false;
 
         private void Start()
         {
@@ -39,9 +42,26 @@ namespace Game
 
         private void Update()
         {
+            if (_isDead)
+            {
+                return;
+            }
+
             playerMoveController.HandlePlayerMove();
         }
 
+        private void EndGameHandler()
+        {
+            _isDead = true;
+            StopAllCoroutines();
+            UserScoreService.AddNewScore(_currentScore);
+            SceneManager.LoadScene(GameConstants.GameScene);
+        }
+
+        private void ResetGame()
+        {
+            
+        }
         #region ENEMY SPAWN
 
         private IEnumerator SpawnEnemyA()
@@ -166,8 +186,17 @@ namespace Game
         /// <param name="damage">damage that enemy/object that deal to player</param>
         private void OnHitPlayer(int damage)
         {
+            if (_isDead)
+            {
+                return;
+            }
+
             _playerHealth -= damage;
             gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
+            if (_playerHealth <= 0)
+            {
+                EndGameHandler();
+            }
         }
 
         #endregion
