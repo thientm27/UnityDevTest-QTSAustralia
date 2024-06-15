@@ -1,3 +1,4 @@
+using System.Collections;
 using Game.Enemy.Interface;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,16 +10,25 @@ namespace Game.Enemy
         protected Transform PlayerTf;
         protected UnityAction<int> OnHitPlayerEvent;
         [SerializeField] protected float Speed = 5.0f;
+        [SerializeField] protected float lifeTime = 10.0f;
+        [SerializeField] protected float warningRange = 3f;
         [SerializeField] protected Rigidbody RigidbodyEnemy;
         [SerializeField] private Renderer enemyRenderer;
         [SerializeField] private Color defaultColor = Color.white;
         [SerializeField] private Color closeColor = Color.red;
+        private Coroutine _destroyCoroutine;
 
         public void Initialize(Transform targetPosition, UnityAction<int> onHitPlayer)
         {
             PlayerTf = targetPosition;
             OnHitPlayerEvent = onHitPlayer;
             StartMove();
+            if (_destroyCoroutine != null)
+            {
+                StopCoroutine(_destroyCoroutine);
+            }
+
+            _destroyCoroutine = StartCoroutine(DestroyAfterLifetime());
         }
 
         public virtual void StartMove()
@@ -41,7 +51,7 @@ namespace Game.Enemy
         private void Update()
         {
             var distanceToPlayer = Vector3.Distance(transform.position, PlayerTf.position);
-            if (distanceToPlayer <= 1.0f)
+            if (distanceToPlayer <= warningRange)
             {
                 ChangeColor(closeColor);
             }
@@ -57,6 +67,12 @@ namespace Game.Enemy
             {
                 enemyRenderer.material.color = color;
             }
+        }
+
+        private IEnumerator DestroyAfterLifetime()
+        {
+            yield return new WaitForSeconds(lifeTime);
+            SimplePool.Despawn(gameObject);
         }
     }
 }
