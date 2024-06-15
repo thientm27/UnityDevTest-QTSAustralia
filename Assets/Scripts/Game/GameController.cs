@@ -38,6 +38,9 @@ namespace Game
             StartCoroutine(SpawnEnemyA());
             StartCoroutine(SpawnEnemyB());
             StartCoroutine(SpawnScoreItems());
+            var lastScore = UserScoreService.GetRecentScore();
+            gameView.SetCurrentScore(0);
+            gameView.SetLastScore(lastScore);
         }
 
         private void Update()
@@ -55,13 +58,13 @@ namespace Game
             _isDead = true;
             StopAllCoroutines();
             UserScoreService.AddNewScore(_currentScore);
-            SceneManager.LoadScene(GameConstants.GameScene);
+            SceneManager.LoadScene(GameConstants.EndScene);
         }
 
         private void ResetGame()
         {
-            
         }
+
         #region ENEMY SPAWN
 
         private IEnumerator SpawnEnemyA()
@@ -122,7 +125,8 @@ namespace Game
                 yield return new WaitForSeconds(gameModel.TimeSpawnScoreObj);
 
                 Vector3 spawnPosition = GetRandomScoreItemSpawnPosition();
-                GameObject scoreItem = Instantiate(gameModel.ScorePrefab, spawnPosition, Quaternion.identity);
+
+                var scoreItem = SimplePool.Spawn(gameModel.ScorePrefab, spawnPosition, Quaternion.identity);
                 if (!_scoreItem.Contains(scoreItem))
                 {
                     scoreItem.GetComponent<ScoreItem>().Initialize(AddScore);
