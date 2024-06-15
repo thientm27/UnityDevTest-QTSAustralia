@@ -158,7 +158,7 @@ Camera:
   m_GameObject: {fileID: 25801875}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
+  m_ClearFlags: 2
   m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -424,7 +424,8 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 9444e71f1df29b745b659c7d69c47b46, type: 3}
     Volume: 1
   - Name: Hurt
-    AudioClips: []
+    AudioClips:
+    - {fileID: 8300000, guid: 92f3eb308413fa740b57646a4b692458, type: 3}
     Volume: 1
   - Name: Score
     AudioClips:
@@ -443,7 +444,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37abf1c81b7d2c74aa3d187ca8019e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musics: []
+  musics:
+  - Name: music
+    AudioClips:
+    - {fileID: 8300000, guid: 291e100c29acedb42b8b3ea72cf4b89a, type: 3}
+    Volume: 0
 --- !u!222 &4108187477751841243
 CanvasRenderer:
   m_ObjectHideFlags: 0
