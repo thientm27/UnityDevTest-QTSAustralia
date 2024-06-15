@@ -19,7 +19,7 @@ namespace Game
         [SerializeField] private Transform mapLimitB;
 
         private readonly Dictionary<GameObject, ChasingEnemy> _trackingEnemyList = new();
-        private readonly Dictionary<GameObject, ChasingEnemy> _scoreItem = new();
+        private readonly HashSet<GameObject> _scoreItem = new();
 
         private int _playerHealth;
         private int _currentScore;
@@ -93,7 +93,7 @@ namespace Game
 
         #endregion
 
-        #region SCORE ITEM
+        #region SCORE ITEM SPAWN
 
         private IEnumerator SpawnScoreItems()
         {
@@ -103,7 +103,11 @@ namespace Game
 
                 Vector3 spawnPosition = GetRandomScoreItemSpawnPosition();
                 GameObject scoreItem = Instantiate(gameModel.ScorePrefab, spawnPosition, Quaternion.identity);
-                scoreItem.GetComponent<ScoreItem>().Initialize(AddScore);
+                if (!_scoreItem.Contains(scoreItem))
+                {
+                    scoreItem.GetComponent<ScoreItem>().Initialize(AddScore);
+                    _scoreItem.Add(scoreItem);
+                }
             }
         }
 
@@ -167,11 +171,5 @@ namespace Game
         }
 
         #endregion
-
-        private bool IsWithinMapLimits(Vector3 position)
-        {
-            return position.x >= mapLimitA.position.x && position.x <= mapLimitB.position.x &&
-                   position.z >= mapLimitA.position.z && position.z <= mapLimitB.position.z;
-        }
     }
 }
