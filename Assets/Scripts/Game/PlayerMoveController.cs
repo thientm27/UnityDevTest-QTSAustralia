@@ -8,13 +8,12 @@ namespace Game
         [SerializeField] private float runningSpeed = 11.5f;
         [SerializeField] private float jumpSpeed = 8.0f;
         [SerializeField] private float gravity = 20.0f;
-        [SerializeField] private Camera playerCamera;
         [SerializeField] private float lookSpeed = 2.0f;
         [SerializeField] private float lookXLimit = 45.0f;
 
-        [SerializeField] private CharacterController _playerMoveController;
-        Vector3 moveDirection = Vector3.zero;
-        float rotationX = 0;
+        [SerializeField] private CharacterController playerMoveController;
+        Vector3 _moveDirection = Vector3.zero;
+        float _rotationX = 0;
 
         [HideInInspector]
         public bool canMove = true;
@@ -27,32 +26,32 @@ namespace Game
             bool isRunning = Input.GetKey(KeyCode.LeftShift);
             float curSpeedX = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Vertical") : 0;
             float curSpeedY = canMove ? (isRunning ? runningSpeed : walkingSpeed) * Input.GetAxis("Horizontal") : 0;
-            float movementDirectionY = moveDirection.y;
-            moveDirection = (forward * curSpeedX) + (right * curSpeedY);
+            float movementDirectionY = _moveDirection.y;
+            _moveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-            if (Input.GetButton("Jump") && canMove && _playerMoveController.isGrounded)
+            if (Input.GetButton("Jump") && canMove && playerMoveController.isGrounded)
             {
-                moveDirection.y = jumpSpeed;
+                _moveDirection.y = jumpSpeed;
             }
             else
             {
-                moveDirection.y = movementDirectionY;
+                _moveDirection.y = movementDirectionY;
             }
 
             // Apply gravity. Gravity is multiplied by deltaTime twice 
-            if (!_playerMoveController.isGrounded)
+            if (!playerMoveController.isGrounded)
             {
-                moveDirection.y -= gravity * Time.deltaTime;
+                _moveDirection.y -= gravity * Time.deltaTime;
             }
 
             // Move the controller
-            _playerMoveController.Move(moveDirection * Time.deltaTime);
+            playerMoveController.Move(_moveDirection * Time.deltaTime);
 
             // Player and Camera rotation
             if (canMove)
             {
-                rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
-                rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
+                _rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
+                _rotationX = Mathf.Clamp(_rotationX, -lookXLimit, lookXLimit);
                 //  playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
                 transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
             }
