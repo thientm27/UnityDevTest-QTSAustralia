@@ -2,5 +2,5 @@
 {
     // Tag
     public const string PlayerTag = "Player";
-    public const string MapBlockerTag = "MapBlocker";
+    public const string JsonPath = "UserScore";
 }

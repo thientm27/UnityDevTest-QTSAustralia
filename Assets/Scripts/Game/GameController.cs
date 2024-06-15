@@ -71,7 +71,7 @@ namespace Game
         private ChasingEnemy SpawnEnemy(GameObject enemyPrefab)
         {
             var enemy = SimplePool.Spawn(enemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
-            // Kiểm tra xem enemy này mưới hay cũ để giảm thiểu "GetComponent" tăng performance
+            // Kiểm tra xem enemy này mới hay cũ để giảm thiểu "GetComponent" -> tăng performance
             if (_trackingEnemyList.TryGetValue(enemy, out var result))
             {
                 return result;
