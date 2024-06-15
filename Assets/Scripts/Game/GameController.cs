@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Game.Component;
 using Game.Enemy;
 using UnityEngine;
 
@@ -7,21 +8,22 @@ namespace Game
 {
     public class GameController : MonoBehaviour
     {
-        [SerializeField] private Transform player;
+        [Header("System")]
         [SerializeField] private GameModel gameModel;
         [SerializeField] private GameView gameView;
         [SerializeField] private PlayerMoveController playerMoveController;
 
+        [Header("Game")]
+        [SerializeField] private Transform player;
+        [SerializeField] private Transform mapLimitA;
+        [SerializeField] private Transform mapLimitB;
+
         private readonly Dictionary<GameObject, ChasingEnemy> _trackingEnemyList = new();
+        private readonly Dictionary<GameObject, ChasingEnemy> _scoreItem = new();
+
         private int _playerHealth;
         private int _currentScore;
         private int _lastScore;
-
-        public void AddScore(int scoreEarn)
-        {
-            _currentScore += scoreEarn;
-            gameView.SetCurrentScore(_currentScore);
-        }
 
         private void Start()
         {
@@ -29,8 +31,10 @@ namespace Game
             // Tạo sẵn các object enemy để sẵn sàng sử dụng
             SimplePool.Preload(gameModel.EnemyAPrefab, 20);
             SimplePool.Preload(gameModel.EnemyBPrefab, 20);
+            SimplePool.Preload(gameModel.ScorePrefab, 20);
             StartCoroutine(SpawnEnemyA());
             StartCoroutine(SpawnEnemyB());
+            StartCoroutine(SpawnScoreItems());
         }
 
         private void Update()
@@ -89,6 +93,69 @@ namespace Game
 
         #endregion
 
+        #region SCORE ITEM
+
+        private IEnumerator SpawnScoreItems()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(gameModel.TimeSpawnScoreObj);
+
+                Vector3 spawnPosition = GetRandomScoreItemSpawnPosition();
+                GameObject scoreItem = Instantiate(gameModel.ScorePrefab, spawnPosition, Quaternion.identity);
+                scoreItem.GetComponent<ScoreItem>().Initialize(AddScore);
+            }
+        }
+
+        private Vector3 GetRandomScoreItemSpawnPosition()
+        {
+            var spawnPosition = Vector3.zero;
+            var playerPosition = player.position;
+            var mapLimitAPosition = mapLimitA.position;
+            var mapLimitBPosition = mapLimitB.position;
+            if (playerPosition.x <= (mapLimitAPosition.x + mapLimitBPosition.x) / 2f)
+            {
+                // Người chơi ở bên trái hoặc chính giữa theo trục X
+                spawnPosition.x =
+                    Random.Range(playerPosition.x + gameModel.ScoreItemMinRangeSpawn, mapLimitBPosition.x);
+            }
+            else
+            {
+                // Người chơi ở bên phải theo trục X
+                spawnPosition.x =
+                    Random.Range(mapLimitAPosition.x, playerPosition.x - gameModel.ScoreItemMinRangeSpawn);
+            }
+
+            if (playerPosition.z >= (mapLimitAPosition.z + mapLimitBPosition.z) / 2f)
+            {
+                // Người chơi ở phía trên theo trục Z
+                spawnPosition.z =
+                    Random.Range(playerPosition.z + gameModel.ScoreItemMinRangeSpawn, mapLimitBPosition.z);
+            }
+            else
+            {
+                // Người chơi ở phía dưới theo trục Z
+                spawnPosition.z =
+                    Random.Range(mapLimitAPosition.z, playerPosition.z - gameModel.ScoreItemMinRangeSpawn);
+            }
+
+            return spawnPosition;
+        }
+
+        #endregion
+
+        #region CALL BACK
+
+        /// <summary>
+        /// Call back when player hit a score item
+        /// </summary>
+        /// <param name="scoreEarn"></param>
+        private void AddScore(int scoreEarn)
+        {
+            _currentScore += scoreEarn;
+            gameView.SetCurrentScore(_currentScore);
+        }
+
         /// <summary>
         /// Callback when enemy hit player
         /// </summary>
@@ -97,6 +164,14 @@ namespace Game
         {
             _playerHealth -= damage;
             gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
+        }
+
+        #endregion
+
+        private bool IsWithinMapLimits(Vector3 position)
+        {
+            return position.x >= mapLimitA.position.x && position.x <= mapLimitB.position.x &&
+                   position.z >= mapLimitA.position.z && position.z <= mapLimitB.position.z;
         }
     }
 }

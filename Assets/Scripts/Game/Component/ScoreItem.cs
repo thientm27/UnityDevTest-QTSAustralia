@@ -18,6 +18,7 @@ namespace Game.Component
             if (other.gameObject.CompareTag(GameConstants.PlayerTag))
             {
                 OnPlayerScore?.Invoke(scoreValue);
+                SimplePool.Despawn(gameObject);
             }
         }
     }

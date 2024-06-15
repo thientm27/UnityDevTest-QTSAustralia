@@ -13,21 +13,23 @@ namespace Game
         [SerializeField] private float enemyBSpawnRateMax;
         [SerializeField] private GameObject enemyBPrefab;
         [Header("Score Obj")]
-        [SerializeField] private GameObject scoreObj;
+        [SerializeField] private GameObject scorePrefab;
         [SerializeField] private float timeSpawnScoreObj = 10f;
+        [SerializeField] private float scoreItemMinRangeSpawn = 5f;
 
         [Header("Other Config")]
         [SerializeField] private float enemySpawnRange;
         [SerializeField] private int playerBaseHealth = 100;
         public float EnemyASpawnRateMin => enemyASpawnRateMin;
         public float EnemyASpawnRateMax => enemyASpawnRateMax;
+        public GameObject EnemyAPrefab => enemyAPrefab;
         public float EnemyBSpawnRateMin => enemyBSpawnRateMin;
         public float EnemyBSpawnRateMax => enemyBSpawnRateMax;
+        public GameObject EnemyBPrefab => enemyBPrefab;
+        public GameObject ScorePrefab => scorePrefab;
+        public float TimeSpawnScoreObj => timeSpawnScoreObj;
+        public float ScoreItemMinRangeSpawn => scoreItemMinRangeSpawn;
         public float EnemySpawnRange => enemySpawnRange;
         public int PlayerBaseHealth => playerBaseHealth;
-        public GameObject EnemyAPrefab => enemyAPrefab;
-        public GameObject EnemyBPrefab => enemyBPrefab;
-
-        public GameObject ScoreObj => scoreObj;
     }
 }

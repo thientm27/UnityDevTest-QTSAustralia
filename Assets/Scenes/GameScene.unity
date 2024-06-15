@@ -83977,6 +83977,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 440511720193684320, guid: 82283b9f91bc48a409e19206bb89d528, type: 3}
   m_PrefabInstance: {fileID: 1797110074}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1798268964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1798268965}
+  m_Layer: 0
+  m_Name: LimitB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1798268965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1798268964}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 120, y: 0, z: -181}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799840184
 GameObject:
   m_ObjectHideFlags: 0
@@ -85514,8 +85545,9 @@ MonoBehaviour:
   enemyBSpawnRateMin: 1
   enemyBSpawnRateMax: 3
   enemyBPrefab: {fileID: 4807671843718849052, guid: 5095fb7e60dcda644ac4d55755aac0a1, type: 3}
-  scoreObj: {fileID: 0}
-  timeSpawnScoreObj: 100
+  scorePrefab: {fileID: 8263159817215693826, guid: 291dc15c97ee6c048abb3234fb0e7bf0, type: 3}
+  timeSpawnScoreObj: 5
+  scoreItemMinRangeSpawn: 5
   enemySpawnRange: 15
   playerBaseHealth: 100
 --- !u!1 &1836287462
@@ -86225,10 +86257,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e31fcf074c0c1d4479d5699fa67304a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 522773128}
   gameModel: {fileID: 1834117461}
   gameView: {fileID: 1962601904}
   playerMoveController: {fileID: 1859627029}
+  player: {fileID: 522773128}
+  mapLimitA: {fileID: 1984526440}
+  mapLimitB: {fileID: 1798268965}
 --- !u!1001 &1862877616
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -90677,6 +90711,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerHealth: {fileID: 2046811495}
+  lastScoreText: {fileID: 650823464}
+  scoreText: {fileID: 1301724606}
 --- !u!1001 &1963313685
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -91507,6 +91543,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 382288999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1984526439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1984526440}
+  m_Layer: 0
+  m_Name: LimitA
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1984526440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984526439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -71, y: 0, z: 3}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1984569425
 PrefabInstance:
@@ -99385,6 +99452,8 @@ SceneRoots:
   - {fileID: 1168956467}
   - {fileID: 2136554499}
   - {fileID: 522773128}
+  - {fileID: 1984526440}
+  - {fileID: 1798268965}
   - {fileID: 684990718}
   - {fileID: 1859627028}
   - {fileID: 1834117460}
