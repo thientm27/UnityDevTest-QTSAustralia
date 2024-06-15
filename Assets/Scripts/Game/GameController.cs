@@ -8,10 +8,14 @@ namespace Game
     {
         [SerializeField] private Transform player;
         [SerializeField] private GameModel gameModel;
+        [SerializeField] private GameView gameView;
         [SerializeField] private PlayerMoveController playerMoveController;
+
+        private int playerHealth;
 
         private void Start()
         {
+            playerHealth = gameModel.PlayerBaseHealth;
             StartCoroutine(SpawnEnemyA());
             StartCoroutine(SpawnEnemyB());
         }
@@ -69,7 +73,8 @@ namespace Game
         /// <param name="damage">damage that enemy/object that deal to player</param>
         private void OnHitPlayer(int damage)
         {
-            Debug.Log($"Player bị tấn công với {damage} sát thương.");
+            playerHealth -= damage;
+            gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, playerHealth);
         }
     }
 }

@@ -147,6 +147,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 5
+  lifeTime: 10
+  warningRange: 1.5
   RigidbodyEnemy: {fileID: 206277777859354087}
   enemyRenderer: {fileID: 7584175192560915643}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
