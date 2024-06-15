@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using GameUtils;
 using UnityEngine;
@@ -8,6 +9,12 @@ namespace Game.Enemy
     {
         [SerializeField] private Collider thisCollider;
         [SerializeField] private int damage = 10; // Sát thương gây ra cho nhân vật
+
+        private void OnEnable()
+        {
+            thisCollider.enabled = true; // on collider
+        }
+
         public override void OnCollisionWithPlayer(GameObject player)
         {
             StartCoroutine(DisableColliderAndDestroy());
