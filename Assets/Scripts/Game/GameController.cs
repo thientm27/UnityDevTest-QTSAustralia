@@ -50,6 +50,7 @@ namespace Game
             StartCoroutine(SpawnEnemyB());
             StartCoroutine(SpawnScoreItems());
             var lastScore = UserScoreService.GetRecentScore();
+            Debug.Log(lastScore);
             gameView.SetCurrentScore(0);
             gameView.SetLastScore(lastScore);
             endZoneTrigger.OnHitPlayer = EndGameHandler;
