@@ -19,7 +19,7 @@ namespace Game
         [HideInInspector]
         public bool canMove = true;
 
-        void Update()
+        public void HandlePlayerMove()
         {
             Vector3 forward = transform.TransformDirection(Vector3.forward);
             Vector3 right = transform.TransformDirection(Vector3.right);
@@ -53,25 +53,11 @@ namespace Game
             {
                 rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
                 rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
-              //  playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+                //  playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
                 transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
             }
         }
 
-        public void PauseGame()
-        {
-            Time.timeScale = 0;
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            canMove = false;
-        }
-
-        public void ResumeGame()
-        {
-            Time.timeScale = 1;
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            canMove = true;
-        }
+     
     }
 }
