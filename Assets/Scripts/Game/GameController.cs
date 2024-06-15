@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Game.Enemy;
 using UnityEngine;
 
@@ -10,12 +11,13 @@ namespace Game
         [SerializeField] private GameModel gameModel;
         [SerializeField] private GameView gameView;
         [SerializeField] private PlayerMoveController playerMoveController;
-
-        private int playerHealth;
+        
+        private readonly Dictionary<GameObject, ChasingEnemy> _trackingEnemyList = new();
+        private int _playerHealth;
 
         private void Start()
         {
-            playerHealth = gameModel.PlayerBaseHealth;
+            _playerHealth = gameModel.PlayerBaseHealth;
             StartCoroutine(SpawnEnemyA());
             StartCoroutine(SpawnEnemyB());
         }
@@ -54,7 +56,16 @@ namespace Game
         private ChasingEnemy SpawnEnemy(GameObject enemyPrefab)
         {
             var enemy = SimplePool.Spawn(enemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
-            return enemy.GetComponent<ChasingEnemy>();
+            // Kiểm tra xem enemy này mưới hay cũ để giảm thiểu "GetComponent" tăng performance
+            if (_trackingEnemyList.TryGetValue(enemy, out var result))
+            {
+                return result;
+            }
+
+            // nếu enemy mới thì add vạo dics
+            var newChasingEnemy = enemy.GetComponent<ChasingEnemy>();
+            _trackingEnemyList.Add(enemy, newChasingEnemy);
+            return newChasingEnemy;
         }
 
         private Vector3 GetRandomSpawnPosition()
@@ -73,8 +84,8 @@ namespace Game
         /// <param name="damage">damage that enemy/object that deal to player</param>
         private void OnHitPlayer(int damage)
         {
-            playerHealth -= damage;
-            gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, playerHealth);
+            _playerHealth -= damage;
+            gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
         }
     }
 }
