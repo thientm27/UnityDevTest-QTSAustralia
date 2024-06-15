@@ -2101,7 +2101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 275.005, y: 0}
+  m_AnchoredPosition: {x: 10, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1112673567
@@ -2213,7 +2213,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
+  m_HorizontalFit: 0
   m_VerticalFit: 2
 --- !u!1 &1168956466
 GameObject:
@@ -3385,6 +3385,7 @@ MonoBehaviour:
   gameView: {fileID: 1962601904}
   playerMoveController: {fileID: 1859627029}
   player: {fileID: 522773128}
+  playerRenderer: {fileID: 522773126}
   mapLimitA: {fileID: 1984526440}
   mapLimitB: {fileID: 1798268965}
   endZoneTrigger: {fileID: 2016507619}
@@ -3550,6 +3551,7 @@ MonoBehaviour:
   playerHealth: {fileID: 2046811495}
   lastScoreText: {fileID: 650823464}
   scoreText: {fileID: 1301724606}
+  healthTxt: {fileID: 1112673567}
 --- !u!1001 &1970063785
 PrefabInstance:
   m_ObjectHideFlags: 0

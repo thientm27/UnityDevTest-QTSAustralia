@@ -16,6 +16,7 @@ namespace Game
 
         [Header("Game")]
         [SerializeField] private Transform player;
+        [SerializeField] private Renderer playerRenderer;
         [SerializeField] private Transform mapLimitA;
         [SerializeField] private Transform mapLimitB;
         [SerializeField] private EndZoneTrigger endZoneTrigger;
@@ -27,9 +28,12 @@ namespace Game
         private int _currentScore;
         private int _lastScore;
         private bool _isDead = false;
-
+        private Color _originalColor;
+        
         private void Start()
         {
+            _originalColor = playerRenderer.material.color;
+
             _playerHealth = gameModel.PlayerBaseHealth;
             // Tạo sẵn các object enemy để sẵn sàng sử dụng
             SimplePool.Preload(gameModel.EnemyAPrefab, 20);
@@ -97,7 +101,7 @@ namespace Game
                 return result;
             }
 
-            // nếu enemy mới thì add vạo dics
+            // nếu enemy mới thì add vào dictionary
             var newChasingEnemy = enemy.GetComponent<ChasingEnemy>();
             _trackingEnemyList.Add(enemy, newChasingEnemy);
             return newChasingEnemy;
@@ -194,10 +198,22 @@ namespace Game
 
             _playerHealth -= damage;
             gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
+            StartCoroutine(PlayerHitEffect());
             if (_playerHealth <= 0)
             {
                 EndGameHandler();
             }
+        }
+
+        /// <summary>
+        /// Coroutine for player hit effect
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator PlayerHitEffect()
+        {
+            playerRenderer.material.color = Color.red;
+            yield return new WaitForSeconds(0.05f);
+            playerRenderer.material.color = _originalColor;
         }
 
         #endregion
