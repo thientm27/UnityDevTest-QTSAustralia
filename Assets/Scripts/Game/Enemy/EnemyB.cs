@@ -6,7 +6,7 @@ namespace Game.Enemy
     public class EnemyB : ChasingEnemy
     {
         [SerializeField] private Collider thisCollider;
-        private int damage = 5; // Damage to player
+        [SerializeField] private int damage = 10; // Sát thương gây ra cho nhân vật
 
         public override void OnCollisionWithPlayer(GameObject player)
         {
@@ -15,6 +15,7 @@ namespace Game.Enemy
 
         private IEnumerator DisableColliderAndDestroy()
         {
+            OnHitPlayerEvent?.Invoke(damage);
             thisCollider.enabled = false; // off collider
             yield return new WaitForSeconds(3); // wait for 3 secs
             // put into pool

@@ -1,31 +1,47 @@
+using System;
 using Game.Enemy.Interface;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game.Enemy
 {
     public abstract class ChasingEnemy : MonoBehaviour, IObstacle
-
     {
-        protected Vector3 targetPosition;
+        protected Vector3 TargetPosition;
+        protected UnityAction<int> OnHitPlayerEvent;
+        protected float Speed = 5.0f; // enemy move speed
+        [SerializeField] protected Rigidbody RigidbodyEnemy;
 
-        public virtual void Initialize(Vector3 targetPosition)
+        public void Initialize(Vector3 targetPosition, UnityAction<int> onHitPlayer)
         {
-            this.targetPosition = targetPosition;
-            // Di chuyển vật cản về phía nhân vật
-            Vector3 direction = (targetPosition - transform.position).normalized;
-            GetComponent<Rigidbody>().velocity = direction * speed;
+            TargetPosition = targetPosition;
+            OnHitPlayerEvent = onHitPlayer;
+            StartMove();
+        }
+
+        public virtual void StartMove()
+        {
+            Vector3 direction = (TargetPosition - transform.position).normalized;
+            RigidbodyEnemy.velocity = direction * Speed;
         }
 
         public abstract void OnCollisionWithPlayer(GameObject player);
 
-        protected virtual void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player"))
             {
-                OnCollisionWithPlayer(collision.gameObject);
+                OnCollisionWithPlayer(other.gameObject);
             }
+
         }
 
-        protected float speed = 5.0f; // Tốc độ di chuyển của vật cản
+        // protected virtual void OnCollisionEnter(Collision collision)
+        // {
+        //     if (collision.gameObject.CompareTag("Player"))
+        //     {
+        //         OnCollisionWithPlayer(collision.gameObject);
+        //     }
+        // }
     }
 }

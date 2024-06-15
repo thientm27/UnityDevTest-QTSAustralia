@@ -4,13 +4,12 @@ namespace Game.Enemy
 {
     public class EnemyA : ChasingEnemy
     {
+       [SerializeField] private int damage = 10; // Sát thương gây ra cho nhân vật
+
         public override void OnCollisionWithPlayer(GameObject player)
         {
-            // Xử lý logic khi va chạm với nhân vật
-            player.GetComponent<Player>().TakeDamage(damage);
-            Destroy(gameObject); // Phá hủy vật cản A
+            OnHitPlayerEvent?.Invoke(damage);
+            SimplePool.Despawn(gameObject);
         }
-
-        private int damage = 10; // Sát thương gây ra cho nhân vật
     }
 }
