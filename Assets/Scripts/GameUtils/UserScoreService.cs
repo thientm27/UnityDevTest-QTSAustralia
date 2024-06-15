@@ -1,43 +1,63 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
+using Newtonsoft.Json;
 
 namespace GameUtils
 {
     public static class UserScoreService
     {
         private static List<int> _userScore;
+        private static readonly string FilePath = Application.persistentDataPath + "/" + GameConstants.JsonPath;
+
+        public static int GetRecentScore()
+        {
+            List<int> userScore = GetUserScore();
+            if (userScore.Count > 0)
+            {
+                return userScore[userScore.Count - 1];
+            }
+
+            return 0;
+        }
 
         public static List<int> GetUserScore()
         {
             if (_userScore == null)
             {
-                // Load from json
+                LoadScoresFromJson();
+            }
 
-                // Load not found
-                _userScore = new List<int>();
-                return _userScore;
-            }
-            else
-            {
-                return _userScore;
-            }
+            return _userScore;
         }
 
         public static void AddNewScore(int newScore)
         {
             if (_userScore == null)
             {
-                // Load from json
+                LoadScoresFromJson();
+            }
 
-                // Load not found
-                _userScore = new List<int>();
-                _userScore.Add(newScore);
+            _userScore.Add(newScore);
+            SaveScoresToJson();
+        }
+
+        private static void LoadScoresFromJson()
+        {
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                _userScore = JsonConvert.DeserializeObject<List<int>>(json);
             }
             else
             {
-                _userScore.Add(newScore);
+                _userScore = new List<int>();
             }
-            
-            // save _userScore as json
+        }
+
+        private static void SaveScoresToJson()
+        {
+            string json = JsonConvert.SerializeObject(_userScore);
+            System.IO.File.WriteAllText(FilePath, json);
         }
     }
 }
