@@ -58,7 +58,7 @@ namespace Game
             _isDead = true;
             StopAllCoroutines();
             UserScoreService.AddNewScore(_currentScore);
-            SceneManager.LoadScene(GameConstants.EndScene);
+            PopupHelpers.Show(GameConstants.EndScene);
         }
 
         private void ResetGame()

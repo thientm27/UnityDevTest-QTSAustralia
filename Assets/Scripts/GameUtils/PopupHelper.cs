@@ -6,7 +6,6 @@ namespace GameUtils
 {
     public enum ParamType
     {
-
     }
 
     public static class PopupHelpers
@@ -36,28 +35,9 @@ namespace GameUtils
             };
         }
 
-        public static void Close()
-        {
-            var scene = SceneManager.GetActiveScene();
-            SetEventSystem(scene, false);
-            SceneManager.UnloadSceneAsync(scene).completed += delegate(AsyncOperation operation)
-            {
-                SetSceneActive(SceneManager.GetActiveScene());
-            };
-        }
-
-        public static void Close(string name)
-        {
-            var scene = SceneManager.GetSceneByName(name);
-            SetEventSystem(scene, false);
-            SceneManager.UnloadSceneAsync(scene).completed += delegate(AsyncOperation operation)
-            {
-                SetSceneActive(SceneManager.GetActiveScene());
-            };
-        }
 
         /// <summary>
-        /// New close with special sence
+        /// close with special sence
         /// </summary>
         /// <param name="scene"></param>
         public static void Close(Scene scene)
