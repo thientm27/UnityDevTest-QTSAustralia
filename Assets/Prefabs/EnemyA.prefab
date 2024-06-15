@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Speed: 5
   RigidbodyEnemy: {fileID: 206277777859354087}
-  enemyRenderer: {fileID: 0}
+  enemyRenderer: {fileID: 7584175192560915643}
   defaultColor: {r: 1, g: 1, b: 1, a: 1}
   closeColor: {r: 1, g: 0, b: 0, a: 1}
   damage: 10

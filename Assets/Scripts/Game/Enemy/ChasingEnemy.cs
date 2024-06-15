@@ -24,6 +24,7 @@ namespace Game.Enemy
         public virtual void StartMove()
         {
             Vector3 direction = (PlayerTf.position - transform.position).normalized;
+            direction.y = 0;
             RigidbodyEnemy.velocity = direction * Speed;
         }
 

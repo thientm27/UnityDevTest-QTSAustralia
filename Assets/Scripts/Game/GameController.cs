@@ -55,9 +55,9 @@ namespace Game
 
         private Vector3 GetRandomSpawnPosition()
         {
-            float angle = Random.Range(0f, Mathf.PI * 2);
-            float x = Mathf.Cos(angle) * gameModel.EnemySpawnRange;
-            float z = Mathf.Sin(angle) * gameModel.EnemySpawnRange;
+            var angle = Random.Range(0f, Mathf.PI * 2);
+            var x = Mathf.Cos(angle) * gameModel.EnemySpawnRange;
+            var z = Mathf.Sin(angle) * gameModel.EnemySpawnRange;
             return new Vector3(player.position.x + x, player.position.y, player.position.z + z);
         }
 
