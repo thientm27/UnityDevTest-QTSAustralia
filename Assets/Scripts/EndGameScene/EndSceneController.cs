@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using GameUtils;
+using Services;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,7 +15,11 @@ namespace EndGameScene
         [SerializeField] private Transform leaderBoardContainer;
 
         private bool _isInit;
-
+        private AudioService _audioService;
+        private void Awake()
+        {
+            _audioService = AudioService.Instance;
+        }
         private void Start()
         {
             scoreText.text = "Your Score: " + UserScoreService.GetRecentScore();
@@ -22,11 +27,13 @@ namespace EndGameScene
 
         public void OnClickPlayAgain()
         {
+            _audioService.PlaySound(Sound.Click);
             SceneManager.LoadScene(GameConstants.GameScene);
         }
 
         public void OnOpenLeaderBoard()
         {
+            _audioService.PlaySound(Sound.Click);
             if (!_isInit)
             {
                 var sortedList = new List<int>(UserScoreService.GetUserScore());
@@ -48,6 +55,7 @@ namespace EndGameScene
 
         public void OnCloseLeaderBoard()
         {
+            _audioService.PlaySound(Sound.Click);
             leaderBoardPopup.SetActive(false);
         }
     }

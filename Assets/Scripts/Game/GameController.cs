@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game.Component;
 using Game.Enemy;
 using GameUtils;
+using Services;
 using UnityEngine;
 
 namespace Game
@@ -29,7 +30,12 @@ namespace Game
         private int _lastScore;
         private bool _isDead = false;
         private Color _originalColor;
-        
+        private AudioService _audioService;
+        private void Awake()
+        {
+            _audioService = AudioService.Instance;
+        }
+
         private void Start()
         {
             _originalColor = playerRenderer.material.color;
@@ -68,6 +74,7 @@ namespace Game
             // save score
             UserScoreService.AddNewScore(_currentScore);
             // show endgame popup
+            _audioService.PlaySound(Sound.PopupOpen, isOverLap: true);
             PopupHelpers.Show(GameConstants.EndScene);
         }
 
@@ -217,6 +224,7 @@ namespace Game
             _playerHealth -= damage;
             gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
             StartCoroutine(PlayerHitEffect());
+            _audioService.PlaySound(Sound.Jump, isOverLap: true);
             if (_playerHealth <= 0)
             {
                 EndGameHandler();

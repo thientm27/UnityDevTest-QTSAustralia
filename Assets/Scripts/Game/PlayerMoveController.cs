@@ -1,3 +1,5 @@
+using System;
+using Services;
 using UnityEngine;
 
 namespace Game
@@ -21,6 +23,12 @@ namespace Game
         [HideInInspector]
         public bool canMove = true;
 
+        private AudioService _audioService;
+        private void Awake()
+        {
+            _audioService = AudioService.Instance;
+        }
+
         public void HandlePlayerMove()
         {
             Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -34,6 +42,7 @@ namespace Game
 
             if (Input.GetButton("Jump") && canMove && playerMoveController.isGrounded)
             {
+                _audioService.PlaySound(Sound.Jump, isOverLap: true);
                 _moveDirection.y = jumpSpeed;
             }
             else
