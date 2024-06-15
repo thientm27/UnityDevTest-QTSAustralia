@@ -42,7 +42,7 @@ namespace Game.Enemy
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag(GameConstants.PlayerTag))
             {
                 OnCollisionWithPlayer(other.gameObject);
             }

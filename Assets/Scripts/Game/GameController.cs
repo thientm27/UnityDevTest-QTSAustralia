@@ -11,9 +11,17 @@ namespace Game
         [SerializeField] private GameModel gameModel;
         [SerializeField] private GameView gameView;
         [SerializeField] private PlayerMoveController playerMoveController;
-        
+
         private readonly Dictionary<GameObject, ChasingEnemy> _trackingEnemyList = new();
         private int _playerHealth;
+        private int _currentScore;
+        private int _lastScore;
+
+        public void AddScore(int scoreEarn)
+        {
+            _currentScore += scoreEarn;
+            gameView.SetCurrentScore(_currentScore);
+        }
 
         private void Start()
         {
