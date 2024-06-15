@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7389474318589866453}
   - component: {fileID: 6438619549163277956}
   - component: {fileID: 6643341091579167948}
+  - component: {fileID: 4001175104469288941}
   m_Layer: 0
   m_Name: EnemyB
   m_TagString: Untagged
@@ -155,3 +156,24 @@ MonoBehaviour:
   closeColor: {r: 1, g: 0, b: 0, a: 1}
   thisCollider: {fileID: 7389474318589866453}
   damage: 5
+--- !u!95 &4001175104469288941
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4807671843718849052}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 845f084c1a7b8c54ba8ee6a3e76e9533, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
