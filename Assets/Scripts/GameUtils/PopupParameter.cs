@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine;
 
-namespace _06.Scripts.Utilities
+namespace GameUtils
 {
     [Serializable]
     public class ObjectToSave<T>

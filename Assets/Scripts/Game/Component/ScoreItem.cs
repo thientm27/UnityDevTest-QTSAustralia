@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameUtils;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Game.Component

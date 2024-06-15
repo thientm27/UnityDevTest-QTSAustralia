@@ -2,24 +2,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-namespace _06.Scripts.Utilities
+namespace GameUtils
 {
     public enum ParamType
     {
-        IsTwoPlayer,
-        PlayerOneSkill,
-        PlayerTwoSkill,
+
     }
 
     public static class PopupHelpers
     {
         public static PopupParameter PassParamPopup()
         {
-            GameObject go = GameObject.FindGameObjectWithTag(Constants.ParamsTag);
-            if (GameObject.FindGameObjectWithTag(Constants.ParamsTag) == null)
+            GameObject go = GameObject.FindGameObjectWithTag(GameConstants.ParamsTag);
+            if (GameObject.FindGameObjectWithTag(GameConstants.ParamsTag) == null)
             {
                 GameObject paramObject = new GameObject(nameof(PopupParameter));
-                paramObject.tag = Constants.ParamsTag;
+                paramObject.tag = GameConstants.ParamsTag;
                 PopupParameter popUpParameter = paramObject.AddComponent<PopupParameter>();
                 return popUpParameter;
             }
