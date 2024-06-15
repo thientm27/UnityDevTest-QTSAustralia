@@ -31,6 +31,7 @@ namespace Game
         private bool _isDead = false;
         private Color _originalColor;
         private AudioService _audioService;
+
         private void Awake()
         {
             _audioService = AudioService.Instance;
@@ -133,7 +134,8 @@ namespace Game
             var angle = Random.Range(0f, Mathf.PI * 2);
             var x = Mathf.Cos(angle) * gameModel.EnemySpawnRange;
             var z = Mathf.Sin(angle) * gameModel.EnemySpawnRange;
-            return new Vector3(player.position.x + x, player.position.y, player.position.z + z);
+            var position = player.position;
+            return new Vector3(position.x + x, position.y, position.z + z);
         }
 
         #endregion
@@ -159,6 +161,7 @@ namespace Game
                     _scoreItem.Add(scoreItem);
                 }
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         private Vector3 GetRandomScoreItemSpawnPosition()
@@ -206,6 +209,7 @@ namespace Game
         /// <param name="scoreEarn"></param>
         private void AddScore(int scoreEarn)
         {
+            _audioService.PlaySound(Sound.Score);
             _currentScore += scoreEarn;
             gameView.SetCurrentScore(_currentScore);
         }
@@ -224,7 +228,7 @@ namespace Game
             _playerHealth -= damage;
             gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, _playerHealth);
             StartCoroutine(PlayerHitEffect());
-            _audioService.PlaySound(Sound.Jump, isOverLap: true);
+            _audioService.PlaySound(Sound.Hurt, isOverLap: true);
             if (_playerHealth <= 0)
             {
                 EndGameHandler();

@@ -425,8 +425,8 @@ MonoBehaviour:
     Volume: 1
   - Name: Hurt
     AudioClips:
-    - {fileID: 8300000, guid: 92f3eb308413fa740b57646a4b692458, type: 3}
-    Volume: 1
+    - {fileID: 8300000, guid: 291e100c29acedb42b8b3ea72cf4b89a, type: 3}
+    Volume: 0.632
   - Name: Score
     AudioClips:
     - {fileID: 8300000, guid: 610815c0648ea3f4fb795824711e4e38, type: 3}
