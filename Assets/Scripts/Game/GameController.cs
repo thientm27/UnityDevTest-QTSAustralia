@@ -18,6 +18,9 @@ namespace Game
         private void Start()
         {
             _playerHealth = gameModel.PlayerBaseHealth;
+            // Tạo sẵn các object enemy để sẵn sàng sử dụng
+            SimplePool.Preload(gameModel.EnemyAPrefab, 20);
+            SimplePool.Preload(gameModel.EnemyBPrefab, 20);
             StartCoroutine(SpawnEnemyA());
             StartCoroutine(SpawnEnemyB());
         }
