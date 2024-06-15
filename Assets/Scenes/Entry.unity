@@ -408,19 +408,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - Name: Click
-    AudioClips: []
+    AudioClips:
+    - {fileID: 8300000, guid: 6399e01eacf7a0d408fc5e85c64b151d, type: 3}
     Volume: 1
   - Name: PopupOpen
-    AudioClips: []
+    AudioClips:
+    - {fileID: 8300000, guid: 5b5a8df2a9427f84499ce6e9180f0b2e, type: 3}
     Volume: 1
   - Name: PopupClose
-    AudioClips: []
+    AudioClips:
+    - {fileID: 8300000, guid: ae86473c13e4d9848827d82d5f5909eb, type: 3}
     Volume: 1
   - Name: Jump
-    AudioClips: []
+    AudioClips:
+    - {fileID: 8300000, guid: 9444e71f1df29b745b659c7d69c47b46, type: 3}
     Volume: 1
   - Name: Hurt
     AudioClips: []
+    Volume: 1
+  - Name: Score
+    AudioClips:
+    - {fileID: 8300000, guid: 610815c0648ea3f4fb795824711e4e38, type: 3}
     Volume: 1
   music: {fileID: 1482280795}
 --- !u!114 &1482280795

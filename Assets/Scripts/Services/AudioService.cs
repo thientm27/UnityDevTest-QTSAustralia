@@ -285,6 +285,7 @@ namespace Services
         PopupOpen,
         PopupClose,
         Jump,
-        Hurt
+        Hurt,
+        Score
     }
 }
