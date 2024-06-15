@@ -1,4 +1,3 @@
-using System;
 using Game.Enemy.Interface;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,21 +6,24 @@ namespace Game.Enemy
 {
     public abstract class ChasingEnemy : MonoBehaviour, IObstacle
     {
-        protected Vector3 TargetPosition;
+        protected Transform PlayerTf;
         protected UnityAction<int> OnHitPlayerEvent;
-        protected float Speed = 5.0f; // enemy move speed
+        [SerializeField] protected float Speed = 5.0f;
         [SerializeField] protected Rigidbody RigidbodyEnemy;
+        [SerializeField] private Renderer enemyRenderer;
+        [SerializeField] private Color defaultColor = Color.white;
+        [SerializeField] private Color closeColor = Color.red;
 
-        public void Initialize(Vector3 targetPosition, UnityAction<int> onHitPlayer)
+        public void Initialize(Transform targetPosition, UnityAction<int> onHitPlayer)
         {
-            TargetPosition = targetPosition;
+            PlayerTf = targetPosition;
             OnHitPlayerEvent = onHitPlayer;
             StartMove();
         }
 
         public virtual void StartMove()
         {
-            Vector3 direction = (TargetPosition - transform.position).normalized;
+            Vector3 direction = (PlayerTf.position - transform.position).normalized;
             RigidbodyEnemy.velocity = direction * Speed;
         }
 
@@ -33,15 +35,27 @@ namespace Game.Enemy
             {
                 OnCollisionWithPlayer(other.gameObject);
             }
-
         }
 
-        // protected virtual void OnCollisionEnter(Collision collision)
-        // {
-        //     if (collision.gameObject.CompareTag("Player"))
-        //     {
-        //         OnCollisionWithPlayer(collision.gameObject);
-        //     }
-        // }
+        private void Update()
+        {
+            var distanceToPlayer = Vector3.Distance(transform.position, PlayerTf.position);
+            if (distanceToPlayer <= 1.0f)
+            {
+                ChangeColor(closeColor);
+            }
+            else
+            {
+                ChangeColor(defaultColor);
+            }
+        }
+
+        private void ChangeColor(Color color)
+        {
+            if (enemyRenderer != null)
+            {
+                enemyRenderer.material.color = color;
+            }
+        }
     }
 }

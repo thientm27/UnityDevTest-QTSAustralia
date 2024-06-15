@@ -7,7 +7,6 @@ namespace Game.Enemy
     {
         [SerializeField] private Collider thisCollider;
         [SerializeField] private int damage = 10; // Sát thương gây ra cho nhân vật
-
         public override void OnCollisionWithPlayer(GameObject player)
         {
             StartCoroutine(DisableColliderAndDestroy());
