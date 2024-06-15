@@ -1,18 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class EndSceneController : MonoBehaviour
+namespace EndGameScene
 {
-    // Start is called before the first frame update
-    void Start()
+    public class EndSceneController : MonoBehaviour
     {
-        
-    }
+        [SerializeField] private TextMeshProUGUI scoreText;
+        [SerializeField] private TextMeshProUGUI lastScoreText;
+        [SerializeField] private GameObject leaderBoardPopup;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        private void Start()
+        {
+            
+        }
+
+        public void OnClickPlayAgain()
+        {
+            SceneManager.LoadScene(GameConstants.GameScene);
+        }
+
+        public void OnOpenLeaderBoard()
+        {
+            leaderBoardPopup.SetActive(true);
+        }
+
+        public void OnCloseLeaderBoard()
+        {
+            leaderBoardPopup.SetActive(false);
+        }
     }
 }
