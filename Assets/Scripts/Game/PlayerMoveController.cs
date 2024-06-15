@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// This class control movement of player
+    /// </summary>
     public class PlayerMoveController : MonoBehaviour
     {
         [SerializeField] private float walkingSpeed = 7.5f;
@@ -56,7 +59,5 @@ namespace Game
                 transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
             }
         }
-
-     
     }
 }

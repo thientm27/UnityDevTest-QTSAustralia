@@ -2,6 +2,9 @@
 
 namespace Game
 {
+    /// <summary>
+    /// This class contain config for game
+    /// </summary>
     public class GameModel : MonoBehaviour
     {
         [Header("Enemy A")]

@@ -33,7 +33,7 @@ namespace Game
         private void Start()
         {
             _originalColor = playerRenderer.material.color;
-
+            gameView.DisplayPlayerHealth(gameModel.PlayerBaseHealth, gameModel.PlayerBaseHealth);
             _playerHealth = gameModel.PlayerBaseHealth;
             // Tạo sẵn các object enemy để sẵn sàng sử dụng
             SimplePool.Preload(gameModel.EnemyAPrefab, 20);
@@ -58,11 +58,16 @@ namespace Game
             playerMoveController.HandlePlayerMove();
         }
 
+        /// <summary>
+        /// This method called when end game
+        /// </summary>
         private void EndGameHandler()
         {
             _isDead = true;
             StopAllCoroutines();
+            // save score
             UserScoreService.AddNewScore(_currentScore);
+            // show endgame popup
             PopupHelpers.Show(GameConstants.EndScene);
         }
 
@@ -92,6 +97,11 @@ namespace Game
             }
         }
 
+        /// <summary>
+        /// Spawn enemy from pool
+        /// </summary>
+        /// <param name="enemyPrefab"></param>
+        /// <returns></returns>
         private ChasingEnemy SpawnEnemy(GameObject enemyPrefab)
         {
             var enemy = SimplePool.Spawn(enemyPrefab, GetRandomSpawnPosition(), Quaternion.identity);
@@ -107,6 +117,10 @@ namespace Game
             return newChasingEnemy;
         }
 
+        /// <summary>
+        /// Logic for position start of enemy  
+        /// </summary>
+        /// <returns></returns>
         private Vector3 GetRandomSpawnPosition()
         {
             var angle = Random.Range(0f, Mathf.PI * 2);
@@ -119,6 +133,10 @@ namespace Game
 
         #region SCORE ITEM SPAWN
 
+        /// <summary>
+        /// Spawn score (star) item from pool
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator SpawnScoreItems()
         {
             while (true)
@@ -128,7 +146,7 @@ namespace Game
                 Vector3 spawnPosition = GetRandomScoreItemSpawnPosition();
 
                 var scoreItem = SimplePool.Spawn(gameModel.ScorePrefab, spawnPosition, Quaternion.identity);
-                if (!_scoreItem.Contains(scoreItem))
+                if (!_scoreItem.Contains(scoreItem)) // track if score item is initialize
                 {
                     scoreItem.GetComponent<ScoreItem>().Initialize(AddScore);
                     _scoreItem.Add(scoreItem);

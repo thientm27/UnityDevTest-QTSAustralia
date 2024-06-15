@@ -6,6 +6,9 @@ using UnityEngine.Events;
 
 namespace Game.Enemy
 {
+    /// <summary>
+    /// abstract of enemy
+    /// </summary>
     public abstract class ChasingEnemy : MonoBehaviour, IObstacle
     {
         protected Transform PlayerTf;

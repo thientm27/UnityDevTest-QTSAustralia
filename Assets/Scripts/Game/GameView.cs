@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Game
 {
+    /// <summary>
+    /// This class control UI of game
+    /// </summary>
     public class GameView : MonoBehaviour
     {
         [SerializeField] private ProgressBarPro playerHealth;
