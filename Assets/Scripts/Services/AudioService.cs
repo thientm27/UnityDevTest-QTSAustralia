@@ -25,7 +25,7 @@ namespace Services
         private float musicVolume = 1f;
 
         private bool vibrateOn;
-        [SerializeField] private List<Sound> sounds;
+        [SerializeField] private List<Audio.Sound> sounds;
         [SerializeField] private Music music;
         private Dictionary<string, AudioSource> soundAudioSources;
 
@@ -235,14 +235,14 @@ namespace Services
             set { vibrateOn = value; }
         }
 
-        public void PlaySound(GUISound nameGUISound, bool isLoop = false, bool isOverLap = false)
+        public void PlaySound(Sound nameSound, bool isLoop = false, bool isOverLap = false)
         {
             if (!soundOn && soundVolume > 0.0f)
             {
                 return;
             }
 
-            AudioSource audioSource = soundAudioSources[nameGUISound.ToString()];
+            AudioSource audioSource = soundAudioSources[nameSound.ToString()];
             if (audioSource.isPlaying)
             {
                 if (isOverLap)
@@ -265,10 +265,10 @@ namespace Services
             audioSource.loop = isLoop;
         }
 
-        public void StopASound(GUISound nameGUISound)
+        public void StopASound(Sound nameSound)
         {
-            soundAudioSources[nameGUISound.ToString()].loop = false;
-            soundAudioSources[nameGUISound.ToString()].Stop();
+            soundAudioSources[nameSound.ToString()].loop = false;
+            soundAudioSources[nameSound.ToString()].Stop();
         }
     }
 
@@ -279,22 +279,12 @@ namespace Services
         Game,
     }
 
-    public enum GUISound
+    public enum Sound
     {
         Click,
         PopupOpen,
         PopupClose,
-        Swipe,
-        Select1,
-        Select2,
-        Won,
-        Hit,
-        Miss,
-        UseSkill,
-        ChangeTurn,
-        HitGround,
-        RadarChange,
-        OpenRadar,
-        Pop
+        Jump,
+        Hurt
     }
 }
